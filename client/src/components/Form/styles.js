@@ -14,6 +14,9 @@ export default makeStyles((theme) => ({
 		flexWrap: "wrap",
 		justifyContent: "center",
 	},
+	headingText: {
+		marginBottom: "1rem",
+	},
 	fileInput: {
 		width: "97%",
 		margin: "10px 0",
