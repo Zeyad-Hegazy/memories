@@ -43,7 +43,7 @@ export default makeStyles({
 		flexDirection: "column",
 	},
 	title: {
-		padding: "0 16px",
+		padding: "15px 16px 0",
 	},
 	cardActions: {
 		padding: "0 16px 8px 16px",

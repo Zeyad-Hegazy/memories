@@ -13,13 +13,13 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
 
 import moment from "moment";
 
 import useStyles from "./styles";
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
 	const classes = useStyles();
 
 	return (
@@ -39,17 +39,20 @@ const Post = ({ post }) => {
 				<Button
 					style={{ color: "white" }}
 					size="small"
-					onClick={() => console.log("clicked")}
+					onClick={() => setCurrentId(post._id)}
 				>
-					<MoreHorizIcon fontSize="default" />
+					<EditIcon fontSize="medium" />
 				</Button>
 			</div>
 			<div className={classes.details}>
 				<Typography variant="body2" color="textSecondary">
 					{post.tags.map((tag) => `#${tag} `)}
 				</Typography>
+				<Typography className={classes.title} variant="h4" gutterBottom>
+					{post.title}
+				</Typography>
 				<CardContent>
-					<Typography className={classes.title} variant="h5" gutterBottom>
+					<Typography variant="h5" gutterBottom>
 						{post.message}
 					</Typography>
 				</CardContent>
