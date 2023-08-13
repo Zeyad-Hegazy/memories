@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { deletePost, likePost } from "../../../actions/posts";
 
 import {
 	Card,
@@ -21,6 +24,7 @@ import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 
 	return (
 		<Card className={classes.card}>
@@ -48,11 +52,11 @@ const Post = ({ post, setCurrentId }) => {
 				<Typography variant="body2" color="textSecondary">
 					{post.tags.map((tag) => `#${tag} `)}
 				</Typography>
-				<Typography className={classes.title} variant="h4" gutterBottom>
+				<Typography className={classes.title} variant="h5" gutterBottom>
 					{post.title}
 				</Typography>
 				<CardContent>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant="body2" color="textSecondary" component="p">
 						{post.message}
 					</Typography>
 				</CardContent>
@@ -60,14 +64,15 @@ const Post = ({ post, setCurrentId }) => {
 					<Button
 						size="small"
 						color="primary"
-						onClick={() => console.log("clicked")}
+						onClick={() => dispatch(likePost(post._id))}
 					>
-						<ThumbUpAltIcon fontSize="small" /> Like {post.likeCount}
+						<ThumbUpAltIcon fontSize="small" />
+						&nbsp; Like &nbsp; {post.likeCount}
 					</Button>
 					<Button
 						size="small"
 						color="primary"
-						onClick={() => console.log("clicked")}
+						onClick={() => dispatch(deletePost(post._id))}
 					>
 						<DeleteIcon fontSize="small" />
 						Delete
