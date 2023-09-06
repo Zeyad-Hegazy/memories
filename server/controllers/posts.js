@@ -65,7 +65,5 @@ export const likePost = async (req, res) => {
 		{ new: true }
 	);
 
-	console.log("Liked !!");
-
 	res.json(updatedPost);
 };
