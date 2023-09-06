@@ -11,17 +11,19 @@ const Navbar = () => {
 
 	return (
 		<AppBar className={classes.appBar} position="static" color="inherit">
-			<div className={classes.flex}>
-				<Typography className={classes.heading} variant="h2" align="center">
-					Memories
-				</Typography>
-				<img
-					className={classes.image}
-					src={memories}
-					alt="memories"
-					height="60"
-				/>
-			</div>
+			<Link to="/" style={{ textDecoration: "none" }}>
+				<div className={classes.flex}>
+					<Typography className={classes.heading} variant="h2" align="center">
+						Memories
+					</Typography>
+					<img
+						className={classes.image}
+						src={memories}
+						alt="memories"
+						height="60"
+					/>
+				</div>
+			</Link>
 			<Toolbar className={classes.toolbar}>
 				{user ? (
 					<div className={classes.profile}>
