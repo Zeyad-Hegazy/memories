@@ -20,10 +20,19 @@ import { AUTH } from "../../constants/actionTypes";
 
 import useStyles from "./styles";
 
+const initialState = {
+	firstName: "",
+	lastName: "",
+	email: "",
+	password: "",
+	confirmpassword: "",
+};
+
 const Auth = () => {
 	const calsses = useStyles();
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignup, setIsSignup] = useState(false);
+	const [formData, setFormData] = useState(initialState);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -38,11 +47,14 @@ const Auth = () => {
 		gapi.load("client:auth2", start);
 	}, []);
 
-	const handleSubmit = () => {
-		console.log("form submited");
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(formData);
 	};
 
-	const handleChange = () => {};
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const handleShowPassword = () => {
 		setShowPassword((prevShowPasswrd) => !prevShowPasswrd);
