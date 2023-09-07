@@ -7,14 +7,16 @@ export const signin = async (req, res) => {
 
 	try {
 		const exisitingUser = await User.findOne({ email });
-		if (!exisitingUser) res.stauts(404).json({ message: "User Not Found!" });
+		if (!exisitingUser)
+			return res.status(404).json({ message: "User Not Found!" });
+
 		const isPasswordCorrect = await bcrypt.compare(
 			password,
 			exisitingUser.password
 		);
 
 		if (!isPasswordCorrect)
-			res.stauts(400).json({ message: "Invalid Password" });
+			return res.status(400).json({ message: "Invalid Password" });
 
 		const token = jwt.sign(
 			{
@@ -25,9 +27,9 @@ export const signin = async (req, res) => {
 			{ expiresIn: "1h" }
 		);
 
-		res.stauts(200).json({ result: exisitingUser, token });
+		res.status(200).json({ result: exisitingUser, token });
 	} catch (error) {
-		res.stauts(500).json({ message: "somthing went wrong !!" });
+		res.status(500).json({ message: "somthing went wrong !!" });
 	}
 };
 
@@ -35,10 +37,13 @@ export const signup = async (req, res) => {
 	const { email, password, firstName, lastName, confirmpassword } = req.body;
 
 	try {
-		if (exisitingUser) res.stauts(400).json({ message: "user already exisit" });
+		const exisitingUser = await User.findOne({ email });
+
+		if (exisitingUser)
+			return res.status(400).json({ message: "user already exisit" });
 
 		if (password !== confirmpassword)
-			res.stauts(400).json({ message: "password dont match" });
+			return res.status(400).json({ message: "password dont match" });
 
 		const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -57,8 +62,8 @@ export const signup = async (req, res) => {
 			{ expiresIn: "1h" }
 		);
 
-		res.stauts(200).json(result, token);
+		res.status(200).json({ result, token });
 	} catch (error) {
-		res.stauts(500).json({ message: "somthing went wrong !!" });
+		res.status(500).json({ message: "somthing went wrong !!" });
 	}
 };

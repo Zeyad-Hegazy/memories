@@ -13,12 +13,12 @@ import Icon from "./Icon";
 import GoogleLogin from "react-google-login";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { gapi } from "gapi-script";
-
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AUTH } from "../../constants/actionTypes";
 
 import useStyles from "./styles";
+import { signup, signin } from "./../../actions/auth";
 
 const initialState = {
 	firstName: "",
@@ -49,7 +49,13 @@ const Auth = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
+
+		if (isSignup) {
+			dispatch(signup(formData));
+		} else {
+			dispatch(signin(formData));
+		}
+		navigate("/");
 	};
 
 	const handleChange = (e) => {
