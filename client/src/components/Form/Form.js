@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField, Button, Paper } from "@material-ui/core";
+// import { Link } from "react-router-dom";
 
 import FileBase64 from "react-file-base64";
 
@@ -10,7 +11,6 @@ import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
 	const [postDate, setPostData] = useState({
-		creator: "",
 		title: "",
 		message: "",
 		tags: "",
@@ -22,6 +22,7 @@ const Form = ({ currentId, setCurrentId }) => {
 		currentId ? state.posts.find((p) => p._id === currentId) : null
 	);
 	const dispatch = useDispatch();
+	const user = JSON.parse(localStorage.getItem("profile"));
 
 	useEffect(() => {
 		if (post) {
@@ -33,9 +34,11 @@ const Form = ({ currentId, setCurrentId }) => {
 		e.preventDefault();
 
 		if (currentId) {
-			dispatch(updatePost(currentId, postDate));
+			dispatch(
+				updatePost(currentId, { ...postDate, name: user?.result?.name })
+			);
 		} else {
-			dispatch(createPost(postDate));
+			dispatch(createPost({ ...postDate, name: user?.result?.name }));
 		}
 
 		clear();
@@ -44,13 +47,22 @@ const Form = ({ currentId, setCurrentId }) => {
 	const clear = () => {
 		setCurrentId(null);
 		setPostData({
-			creator: "",
 			title: "",
 			message: "",
 			tags: "",
 			selectedFile: "",
 		});
 	};
+
+	if (!user?.result?.name) {
+		return (
+			<Paper className={classes.paper} align="center">
+				<Typography variant="h6">
+					Please sign In to create your own memories and like other's memories
+				</Typography>
+			</Paper>
+		);
+	}
 
 	return (
 		<Paper className={classes.paper}>
@@ -64,16 +76,6 @@ const Form = ({ currentId, setCurrentId }) => {
 					{`${currentId ? "Editing" : "Creating"} `}a Memory
 				</Typography>
 
-				<TextField
-					name="creator"
-					variant="outlined"
-					label="Creator"
-					fullWidth
-					value={postDate.creator}
-					onChange={(e) =>
-						setPostData({ ...postDate, creator: e.target.value })
-					}
-				/>
 				<TextField
 					name="title"
 					variant="outlined"
