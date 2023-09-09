@@ -64,7 +64,7 @@ export const likePost = async (req, res) => {
 
 	const post = await PostMessage.findById(id);
 
-	const index = post.likes.findByIndex((id) => id === String(req.userId));
+	const index = post.likes.findIndex((id) => id === String(req.userId));
 
 	if (index === -1) {
 		// like post
