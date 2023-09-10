@@ -32,9 +32,9 @@ const Navbar = () => {
 		<AppBar className={classes.appBar} position="static" color="inherit">
 			<Link to="/" style={{ textDecoration: "none" }}>
 				<div className={classes.flex}>
-					<Typography className={classes.heading} variant="h2" align="center">
+					{/* <Typography className={classes.heading} variant="h2" align="center">
 						Memories
-					</Typography>
+					</Typography> */}
 					<img
 						className={classes.image}
 						src={memories}

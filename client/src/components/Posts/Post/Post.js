@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -25,6 +26,42 @@ import useStyles from "./styles";
 const Post = ({ post, setCurrentId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const user = JSON.parse(localStorage.getItem("profile"));
+
+	const Likes = () => {
+		if (post.likes.length > 0) {
+			const isLikedByUser = post.likes.some(
+				(like) => like === user?.result?.googleId || like === user?.result?._id
+			);
+
+			if (isLikedByUser) {
+				return (
+					<>
+						<ThumbUpAltIcon fontSize="small" />
+						&nbsp;
+						{post.likes.length > 2
+							? `You and ${post.likes.length - 1} others`
+							: `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+					</>
+				);
+			} else {
+				return (
+					<>
+						<ThumbUpAltOutlinedIcon fontSize="small" />
+						&nbsp;{post.likes.length}&nbsp;
+						{post.likes.length === 1 ? "Like" : "Likes"}
+					</>
+				);
+			}
+		} else {
+			return (
+				<>
+					<ThumbUpAltOutlinedIcon fontSize="small" />
+					&nbsp;Like
+				</>
+			);
+		}
+	};
 
 	return (
 		<Card className={classes.card}>
@@ -40,13 +77,16 @@ const Post = ({ post, setCurrentId }) => {
 				</Typography>
 			</div>
 			<div className={classes.overlay2}>
-				<Button
-					style={{ color: "white" }}
-					size="small"
-					onClick={() => setCurrentId(post._id)}
-				>
-					<EditIcon fontSize="medium" />
-				</Button>
+				{(user?.result?.googleId === post?.creator ||
+					user?.result?._id === post?.creator) && (
+					<Button
+						style={{ color: "white" }}
+						size="small"
+						onClick={() => setCurrentId(post._id)}
+					>
+						<EditIcon fontSize="medium" />
+					</Button>
+				)}
 			</div>
 			<div className={classes.details}>
 				<Typography variant="body2" color="textSecondary">
@@ -64,19 +104,22 @@ const Post = ({ post, setCurrentId }) => {
 					<Button
 						size="small"
 						color="primary"
+						disabled={!user?.result}
 						onClick={() => dispatch(likePost(post._id))}
 					>
-						<ThumbUpAltIcon fontSize="small" />
-						&nbsp; Like &nbsp; {post.likeCount}
+						<Likes />
 					</Button>
-					<Button
-						size="small"
-						color="primary"
-						onClick={() => dispatch(deletePost(post._id))}
-					>
-						<DeleteIcon fontSize="small" />
-						Delete
-					</Button>
+					{(user?.result?.googleId === post?.creator ||
+						user?.result?._id === post?.creator) && (
+						<Button
+							size="small"
+							color="primary"
+							onClick={() => dispatch(deletePost(post._id))}
+						>
+							<DeleteIcon fontSize="small" />
+							Delete
+						</Button>
+					)}
 				</CardActions>
 			</div>
 		</Card>
