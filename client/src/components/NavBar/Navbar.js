@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import memories from "../../assets/images/memories.png";
 import useStyles from "./styles";
-import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
 
 const Navbar = () => {
+	const user = useSelector((state) => state.auth.profile);
 	const classes = useStyles();
-	const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const location = useLocation();
-
-	useEffect(() => {
-		// const token = user?.token;
-		// JWT...
-		setUser(JSON.parse(localStorage.getItem("profile")));
-	}, [location]);
 
 	const logout = () => {
 		dispatch({ type: LOGOUT });
-
-		setUser(null);
-
-		navigate("/");
 	};
 
 	return (
 		<AppBar className={classes.appBar} position="static" color="inherit">
 			<Link to="/" style={{ textDecoration: "none" }}>
 				<div className={classes.flex}>
-					{/* <Typography className={classes.heading} variant="h2" align="center">
-						Memories
-					</Typography> */}
 					<img
 						className={classes.image}
 						src={memories}

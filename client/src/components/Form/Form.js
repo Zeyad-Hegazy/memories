@@ -18,11 +18,11 @@ const Form = ({ currentId, setCurrentId }) => {
 	});
 
 	const classes = useStyles();
+	const user = useSelector((state) => state.auth.profile);
 	const post = useSelector((state) =>
 		currentId ? state.posts.find((p) => p._id === currentId) : null
 	);
 	const dispatch = useDispatch();
-	const user = JSON.parse(localStorage.getItem("profile"));
 
 	useEffect(() => {
 		if (post) {
@@ -54,7 +54,7 @@ const Form = ({ currentId, setCurrentId }) => {
 		});
 	};
 
-	if (!user?.result?.name) {
+	if (!user?.result) {
 		return (
 			<Paper className={classes.paper} align="center">
 				<Typography variant="h6">

@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Container, Grow } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import Navbar from "./components/NavBar/Navbar";
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";

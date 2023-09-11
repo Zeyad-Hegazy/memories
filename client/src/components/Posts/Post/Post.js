@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { deletePost, likePost } from "../../../actions/posts";
 
@@ -26,7 +26,7 @@ import useStyles from "./styles";
 const Post = ({ post, setCurrentId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const user = JSON.parse(localStorage.getItem("profile"));
+	const user = useSelector((state) => state.auth.profile);
 
 	const Likes = () => {
 		if (post.likes.length > 0) {

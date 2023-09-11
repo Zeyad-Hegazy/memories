@@ -41,7 +41,6 @@ const Auth = () => {
 			gapi.client.init({
 				clientId:
 					"310839217382-uk26qqteqjgcaret1olst5e1oof99ndt.apps.googleusercontent.com",
-				scope: "",
 			});
 		}
 		gapi.load("client:auth2", start);
@@ -52,10 +51,11 @@ const Auth = () => {
 
 		if (isSignup) {
 			dispatch(signup(formData));
+			navigate("/");
 		} else {
 			dispatch(signin(formData));
+			navigate("/");
 		}
-		navigate("/");
 	};
 
 	const handleChange = (e) => {

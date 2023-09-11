@@ -9,7 +9,6 @@ const auth = async (req, res, next) => {
 
 		if (token && isCoustomeAuth) {
 			decodedData = jwt.verify(token, "test", { algorithm: "RS256" });
-			console.log("this is decoded data " + decodedData);
 			req.userId = decodedData?.id;
 		} else {
 			decodedData = jwt.decode(token);
