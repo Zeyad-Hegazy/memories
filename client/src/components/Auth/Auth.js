@@ -145,25 +145,28 @@ const Auth = () => {
 					>
 						{isSignup ? "Sign Up" : "Sign In"}
 					</Button>
-					<GoogleLogin
-						clientId="310839217382-uk26qqteqjgcaret1olst5e1oof99ndt.apps.googleusercontent.com"
-						render={(renderProps) => (
-							<Button
-								calsses={calsses.googleButton}
-								color="primary"
-								fullWidth
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								startIcon={<Icon />}
-								variant="contained"
-							>
-								Google Sign In
-							</Button>
-						)}
-						onSuccess={googleSuccess}
-						onFailure={googleFailure}
-						cookiePolicy={"single_host_origin"}
-					/>
+					{!isSignup && (
+						<GoogleLogin
+							clientId="310839217382-uk26qqteqjgcaret1olst5e1oof99ndt.apps.googleusercontent.com"
+							render={(renderProps) => (
+								<Button
+									calsses={calsses.googleButton}
+									color="primary"
+									fullWidth
+									onClick={renderProps.onClick}
+									disabled={renderProps.disabled}
+									startIcon={<Icon />}
+									variant="contained"
+								>
+									Google Sign In
+								</Button>
+							)}
+							onSuccess={googleSuccess}
+							onFailure={googleFailure}
+							cookiePolicy={"single_host_origin"}
+						/>
+					)}
+
 					<Grid container justifyContent="center" fullWidth>
 						<Grid item>
 							<Button onClick={switchMode}>

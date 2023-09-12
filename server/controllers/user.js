@@ -1,9 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+// import { validationResult } from "express-validator";
 
 export const signin = async (req, res) => {
 	const { email, password } = req.body;
+
+	// const errors = validationResult(req);
 
 	try {
 		const exisitingUser = await User.findOne({ email });
@@ -35,6 +38,8 @@ export const signin = async (req, res) => {
 
 export const signup = async (req, res) => {
 	const { email, password, firstName, lastName, confirmpassword } = req.body;
+
+	// const errors = validationResult(req);
 
 	try {
 		const exisitingUser = await User.findOne({ email });
