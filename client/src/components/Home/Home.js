@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Grow, Container, Grid } from "@material-ui/core";
+import React, { useState, useEffect, Suspense, lazy } from "react";
+import { Grow, Container, Grid, CircularProgress } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../actions/posts";
-import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./styles";
+
+const Posts = lazy(() => import("../Posts/Posts"));
 
 const Home = () => {
 	const classes = useStyles();
@@ -27,7 +28,9 @@ const Home = () => {
 					spacing={3}
 				>
 					<Grid item xs={12} sm={7}>
-						<Posts setCurrentId={setCurrentId} />
+						<Suspense fallback={<CircularProgress />}>
+							<Posts setCurrentId={setCurrentId} />
+						</Suspense>
 					</Grid>
 					<Grid item xs={12} sm={4}>
 						<Form currentId={currentId} setCurrentId={setCurrentId} />
