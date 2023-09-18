@@ -5,7 +5,7 @@ import memories from "../../assets/images/memories.png";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
-import { decode } from "jwt-decode";
+import decode from "jwt-decode";
 
 const Navbar = () => {
 	const user = useSelector((state) => state.auth.profile);
